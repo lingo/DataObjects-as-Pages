@@ -197,7 +197,8 @@ class DoapSearchForm extends Form {
 
 	 	if($this->showInSearchTurnOn)	$extraFilters['SiteTree'] .= " AND showInSearch <> 0";
 
-		$start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+		$start = max(0, isset($_GET['start']) ? (int)$_GET['start'] : 0);
+		$pageLength = max(0, isset($_GET['count']) ? (int)$_GET['count'] : $pageLength);
 		$limit = $start . ", " . (int) $pageLength;
 
 		$notMatch = $invertedMatch ? "NOT " : "";
