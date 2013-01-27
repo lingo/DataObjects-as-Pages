@@ -71,7 +71,7 @@ $(document).ready(function() {
 			
 			return doList();
 		});
-		return false();
+		return false;
 	});
 	
 	//Duplicate Button
