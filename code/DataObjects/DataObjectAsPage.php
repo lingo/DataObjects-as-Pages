@@ -18,7 +18,7 @@ class DataObjectAsPage extends DataObject {
 	
 	static $defaults = array(
 		'Title'=>'New Item',
-		'URLSegment' => 'new-item',
+		'URLSegment' => 'illegal/url/segment',
 		'Status' => 'Draft'
 	);
 	
@@ -389,10 +389,14 @@ class DataObjectAsPage extends DataObject {
 		}
 		
 	    // If there is no URLSegment set, generate one from Title
-	    if((!$this->URLSegment || $this->URLSegment == 'new-item') && $this->Title != 'New Item') 
+	    if((!$this->URLSegment || $this->URLSegment == 'illegal/url/segment'))
 	    {
-	        $this->URLSegment = SiteTree::generateURLSegment($this->Title);
-	    } 
+			if (!empty($this->Title)) {
+				$this->URLSegment = SiteTree::generateURLSegment($this->Title);
+			} else {
+				$this->URLSegment = strtolower($this->ClassName);
+			}
+		}
 	    else if($this->isChanged('URLSegment')) 
 	    {
 	        // Make sure the URLSegment is valid for use in a URL
@@ -401,7 +405,6 @@ class DataObjectAsPage extends DataObject {
 	          
 	        // If after sanitising there is no URLSegment, give it a reasonable default
 	        if(!$segment) {
-	            $segment = "item-$this->ID";
 	            }
 	            $this->URLSegment = $segment;
 	        }
