@@ -228,8 +228,8 @@ class DataObjectAsPage extends DataObject {
 			$item->write();
 		}
 		
-		$this->extend('onAfterDuplicate', $page);
-		
+
+		$this->extend('onAfterDuplicate', $item);
 		return $item;
 	}
 	
